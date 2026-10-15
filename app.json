@@ -1,0 +1,52 @@
+{
+  "expo": {
+    "name": "Expo Pipeline Lab",
+    "slug": "expo-pipeline-lab",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon.png",
+    "scheme": "expopipelinelab",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "bundleIdentifier": "com.focusotter.expopipelinelab",
+      "supportsTablet": false,
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Expo Pipeline Lab takes a photo so the hosted API can describe it and suggest tags."
+      }
+    },
+    "web": {
+      "output": "server",
+      "favicon": "./assets/images/favicon.png"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-dev-client",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#0B1220",
+          "image": "./assets/images/splash-icon.png",
+          "imageWidth": 76
+        }
+      ],
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "Allow Expo Pipeline Lab to take a photo so it can be described and tagged."
+        }
+      ],
+      "expo-sqlite",
+      "react-native-auth0"
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    },
+    "extra": {
+      "auth0ClientId": "mw7slVl0xn16xgjCLPEN9D3eYk9FqVA5",
+      "auth0Audience": "https://expo-pipeline-lab.api",
+      "auth0Scheme": "expopipelinelab"
+    }
+  }
+}
