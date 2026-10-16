@@ -13,6 +13,10 @@ This repo is a lab, not a product. Features stay small on purpose.
 
 ## Architecture
 
+End-to-end write-up for Focus, including the architecture diagram, gotchas we actually hit, a next-app playbook, and a feature matrix (native vs EAS Update vs Hosting): **[docs/LEARNINGS.md](docs/LEARNINGS.md)**.
+
+![Architecture diagram](docs/architecture.svg)
+
 ```
 iOS app (expo-dev-client)
   Auth0 Universal Login  →  access token (audience https://expo-pipeline-lab.api)
