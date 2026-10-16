@@ -46,7 +46,11 @@
     "extra": {
       "auth0ClientId": "mw7slVl0xn16xgjCLPEN9D3eYk9FqVA5",
       "auth0Audience": "https://expo-pipeline-lab.api",
-      "auth0Scheme": "expopipelinelab"
-    }
+      "auth0Scheme": "expopipelinelab",
+      "eas": {
+        "projectId": "87c2f5aa-04a4-4716-a566-0d2a57bc2992"
+      }
+    },
+    "owner": "focus-otter"
   }
 }
