@@ -112,7 +112,7 @@ The project is linked as `@focus-otter/expo-pipeline-lab`. Preview subdomain is 
 
 Set these **server** env vars on the EAS project (Hosting / `eas env:create`) before calling the route in production:
 
-- `AI_GATEWAY_API_KEY` (secret)
+- `AI_GATEWAY_API_KEY` — must be **Sensitive** (not Secret). EAS Hosting cannot deploy Secret variables; a Secret key is why `POST /api/describe` currently returns 500 after auth (`Unauthenticated request to AI Gateway`). After changing visibility, re-run `eas deploy --environment preview` and `eas deploy --prod --environment production`.
 - `AUTH0_DOMAIN` = `demo-showcase.us.auth0.com`  <!-- pragma: allowlist secret -->
 - `AUTH0_AUDIENCE` = `https://expo-pipeline-lab.api`
 - `AUTH0_ISSUER` = `https://demo-showcase.us.auth0.com/` (optional; the route derives it from the domain)  <!-- pragma: allowlist secret -->
@@ -157,7 +157,7 @@ These remain for Focus:
 5. **Auth0 test user** — the tenant already has the Native app, API, client grant, and Username-Password-Authentication enabled for this client. Create a user (or turn on signup) if you need a login to demo.
 6. **Optional Auth0 follow-ups** this session did not change: social connections, branding, MFA, or extra Allowed Callback URLs if you add Android later.
 
-Already done: `eas init` (`extra.eas.projectId` + `owner`), EAS env vars (`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `AI_GATEWAY_API_KEY`, `EXPO_PUBLIC_API_ORIGIN`), and the first preview + production Hosting deploys.
+Already done: `eas init` (`extra.eas.projectId` + `owner`), EAS env vars (`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `EXPO_PUBLIC_API_ORIGIN`), `AI_GATEWAY_API_KEY` (present as Secret — Hosting cannot use it until visibility is Sensitive), first preview + production Hosting deploys, and an Auth0 M2M smoke-test app (`Expo Pipeline Lab M2M Test`) with a client grant for `https://expo-pipeline-lab.api`.
 
 Auth0 work that is already done is listed in the Architecture table above.
 
