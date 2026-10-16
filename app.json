@@ -12,7 +12,8 @@
       "supportsTablet": false,
       "icon": "./assets/expo.icon",
       "infoPlist": {
-        "NSCameraUsageDescription": "Expo Pipeline Lab takes a photo so the hosted API can describe it and suggest tags."
+        "NSCameraUsageDescription": "Expo Pipeline Lab takes a photo so the hosted API can describe it and suggest tags.",
+        "ITSAppUsesNonExemptEncryption": false
       }
     },
     "web": {
