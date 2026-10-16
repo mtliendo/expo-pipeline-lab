@@ -66,7 +66,7 @@ cp .env.example .env
 
 Fill `AI_GATEWAY_API_KEY` in `.env`. Do not prefix it with `EXPO_PUBLIC_`.
 
-`EXPO_PUBLIC_*` Auth0 values are already filled. After the first `eas deploy`, set `EXPO_PUBLIC_API_ORIGIN` to the Hosting origin (no trailing slash) so a production iOS build can reach `/api/describe`. In local `pnpm start`, a relative `/api/describe` fetch uses the Metro origin automatically.
+`EXPO_PUBLIC_*` Auth0 values are already filled. `EXPO_PUBLIC_API_ORIGIN` is `https://expo-pipeline-lab.expo.app` (no trailing slash) so a production iOS build can reach `/api/describe`. In local `pnpm start`, a relative `/api/describe` fetch uses the Metro origin automatically.
 
 ## How to run locally
 
@@ -105,7 +105,10 @@ pnpm exec eas-cli deploy
 
 Use `pnpm exec eas-cli deploy --prod` for the production Hosting URL.
 
-The first deploy asks you to `eas login`, `eas init` (writes `extra.eas.projectId`), and pick a preview subdomain. Those steps are Focus-only; this repo does not contain a project ID.
+The project is linked as `@focus-otter/expo-pipeline-lab`. Preview subdomain is `expo-pipeline-lab`.
+
+- Preview URL: `https://expo-pipeline-lab--qr0voarwbl.expo.app`
+- Production URL: `https://expo-pipeline-lab.expo.app`
 
 Set these **server** env vars on the EAS project (Hosting / `eas env:create`) before calling the route in production:
 
@@ -115,7 +118,7 @@ Set these **server** env vars on the EAS project (Hosting / `eas env:create`) be
 - `AUTH0_ISSUER` = `https://demo-showcase.us.auth0.com/` (optional; the route derives it from the domain)  <!-- pragma: allowlist secret -->
 - `AI_GATEWAY_MODEL` = `google/gemini-2.5-flash` (optional)
 
-Then set `EXPO_PUBLIC_API_ORIGIN` for native builds to the Hosting origin, for example `https://<subdomain>.expo.app`.
+`EXPO_PUBLIC_API_ORIGIN` for native builds is `https://expo-pipeline-lab.expo.app`.
 
 `eas.json` does not turn on `EXPO_UNSTABLE_DEPLOY_SERVER`. If you want EAS Build to deploy a versioned server and inject `origin` automatically, add that env var in the Expo dashboard.
 
@@ -145,20 +148,16 @@ pnpm exec eas-cli submit -p ios --profile production --latest
 
 ## Focus-only checklist
 
-These cannot be finished from this agent session:
+These remain for Focus:
 
 1. **Apple Developer Program** membership for the team that will own `com.focusotter.expopipelinelab`.
 2. **App Store Connect app record** with that bundle ID (needed for `eas submit` / TestFlight).
-3. **`eas login`** as the Expo account that should own the project.
-4. **`eas init`** in this repo so `app.json` gets `extra.eas.projectId` (and the EAS owner). Do not invent a project ID.
-5. **EAS env vars** for Hosting and builds:
-   - Secret: `AI_GATEWAY_API_KEY`
-   - Public/server: `AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `AUTH0_ISSUER` (optional), `AI_GATEWAY_MODEL` (optional)
-   - Public client: `EXPO_PUBLIC_API_ORIGIN` after the first Hosting deploy
-6. **First `eas deploy`** — choose the preview subdomain and confirm the Hosting URL.
-7. **Apple / EAS credentials** — distribution cert, provisioning profile, and App Store Connect API key (or let EAS prompt).
-8. **Auth0 test user** — the tenant already has the Native app, API, client grant, and Username-Password-Authentication enabled for this client. Create a user (or turn on signup) if you need a login to demo.
-9. **Optional Auth0 follow-ups** this session did not change: social connections, branding, MFA, or extra Allowed Callback URLs if you add Android later.
+3. **Apple / EAS credentials** — distribution cert, provisioning profile, and App Store Connect API key (or let EAS prompt).
+4. **`eas build -p ios` / `eas submit -p ios`** once Apple credentials exist.
+5. **Auth0 test user** — the tenant already has the Native app, API, client grant, and Username-Password-Authentication enabled for this client. Create a user (or turn on signup) if you need a login to demo.
+6. **Optional Auth0 follow-ups** this session did not change: social connections, branding, MFA, or extra Allowed Callback URLs if you add Android later.
+
+Already done: `eas init` (`extra.eas.projectId` + `owner`), EAS env vars (`AUTH0_DOMAIN`, `AUTH0_AUDIENCE`, `AI_GATEWAY_API_KEY`, `EXPO_PUBLIC_API_ORIGIN`), and the first preview + production Hosting deploys.
 
 Auth0 work that is already done is listed in the Architecture table above.
 
