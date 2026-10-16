@@ -23,6 +23,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
           customScheme: 'expopipelinelab',
         },
       ],
+      './plugins/withAuth0Expo58AppDelegate',
     ],
     extra: {
       ...config.extra,
