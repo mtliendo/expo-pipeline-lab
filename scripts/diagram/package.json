@@ -1,0 +1,15 @@
+{
+  "name": "expo-pipeline-lab-diagram",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "generate": "node generate.mjs"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.0",
+    "@excalidraw/utils": "^0.1.2",
+    "@resvg/resvg-js": "^2.6.2",
+    "esbuild": "^0.25.0",
+    "playwright-core": "^1.55.0"
+  }
+}
