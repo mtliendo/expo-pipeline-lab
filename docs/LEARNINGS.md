@@ -217,6 +217,43 @@ DPoP stays off here because the API verifies a Bearer JWT with `jose`, not a DPo
 
 ---
 
+## Agent skills, Tamagui, and motion (baseline)
+
+This lab is also the starter for the next Focus Expo app. Skills are committed under `.agents/skills/`. Conflict rules live in [`AGENTS.md`](../AGENTS.md).
+
+**Skills installed**
+
+- Expo official (`npx skills add expo/skills --skill '*'`), minus `expo-ui`.
+- Vercel RN: `vercel-react-native-skills`.
+- Callstack: `react-native-best-practices`.
+- Software Mansion: same skill name, stored as `software-mansion-react-native-best-practices` so it does not overwrite Callstack.
+- Tamagui v3 (npm `tamagui@3.x`, skills from `tamagui/tamagui` `main`): `tamagui`, `tamagui-v6-config`, `tamagui-theme-generator`, `tamagui-upgrade-v3`.
+
+**Dropped**
+
+- `expo-ui` — it tells agents to default to `@expo/ui` (SwiftUI) for buttons/sheets/lists, which fights Tamagui as the UI kit.
+
+**Conflicts and the winner**
+
+| Topic | Skills that disagree | This repo |
+| --- | --- | --- |
+| Styling | Vercel NativeWind / StyleSheet; Expo `@expo/ui`; Tamagui | **Tamagui v3** + config v6. No NativeWind. Bare tokens (no `$`). |
+| Motion | Moti / RN `Animated` / Reanimated 3 vs 4 | **Reanimated 4 + worklets + Gesture Handler**. Tamagui driver is `@tamagui/config/animations-reanimated`. |
+| Server state | SWR vs React Query | **TanStack Query** when you add cached remote data. |
+| Local data | — | **expo-sqlite** is the on-device source of truth. |
+| Small client state | — | **Zustand** when `useState` is not enough. |
+| Platform | Android R8 / 16 KB / Play | **iOS-only**; ignore those Callstack refs. |
+
+**Tamagui**
+
+Stable **Tamagui 3.0.18** (not the old v2 line). It requires React 19 and RN 0.81+ New Architecture, which SDK 58 already is. Config is `tamagui.config.ts` (`defaultConfig` from `@tamagui/config/v6` + Reanimated animations). `TamaguiProvider` wraps the root layout; Metro uses `@tamagui/cli/metro` and `tamagui.build.ts`. Light/dark follow `useColorScheme`. Sign-in, photo list, and camera screens use Tamagui components; pipeline behavior is unchanged.
+
+**Motion / native build**
+
+`react-native-reanimated` 4.x, `react-native-worklets`, and `react-native-gesture-handler` are already in `package.json` and must stay on the SDK 58 versions (`pnpm expo install`). List cards use Reanimated entering/layout animations; buttons use Tamagui `transition` + `press:` scale. These libraries are **native**. A JS-only OTA cannot add them. After this lands, ship a **new development/production iOS build** before relying on the animations on device. Do not run `eas build` / `eas submit` from this docs/UI PR unless a human asks.
+
+---
+
 ## Playbook for the next app
 
 Numbered path from zero to TestFlight, reusing this account setup. Do not submit for App Store review unless a human explicitly asks.
